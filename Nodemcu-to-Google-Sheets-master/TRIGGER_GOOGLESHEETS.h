@@ -10,7 +10,7 @@ void Google_Sheets_Init(char array_2d[10][6], String sheets_gas_id, int param_si
 
 String url;
 
-char column_name[ ][6]={"x","y"};;
+char column_name[ ][6]={"x","y","z","t"};;
 
 double random_values[100];
 
