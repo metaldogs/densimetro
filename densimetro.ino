@@ -7,16 +7,19 @@ char column_name_in_sheets[][6] = {
   "Y",
   "Z",
   "T",
+  "B",
 };                                                                                                   /*1. The Total no of column depends on how many value you have created in Script of Sheets;2. It has to be in order as per the rows decided in google sheets*/
 String Sheets_GAS_ID = "AKfycbyF6TaELwAhQnCTuLouykZkwsNU8SrKBhUdM9FfA4_QwRAeKkLGNQ1Bm0TGIGcMpxa2Ew"; /*This is the Sheets GAS ID, you need to look for your sheets id*/
-int No_of_Parameters = 4;                                                                            /*Here No_of_Parameters decides how many parameters you want to send it to Google Sheets at once, change it according to your needs*/
+int No_of_Parameters = 5;                                                                            /*Here No_of_Parameters decides how many parameters you want to send it to Google Sheets at once, change it according to your needs*/
 /*********************************************/
 
 int16_t Acc_rawX, Acc_rawY, Acc_rawZ, Gyr_rawX, Gyr_rawY, Gyr_rawZ, temp_raw;
-float accX, accY, accZ, temp;
+float accX, accY, accZ, temp, bateryRead;
+int analogPin = A0;
 
 
 void setup() {
+
   delay(5000);
   Serial.begin(9600);
   while (!Serial)
@@ -31,7 +34,7 @@ void setup() {
   Wire.write(0);
   Wire.endTransmission(true);
 
-    Wire.beginTransmission(0x68);
+  Wire.beginTransmission(0x68);
   Wire.write(0x3B);  //Ask for the 0x3B register- correspond to AcX
   Wire.endTransmission(false);
   Wire.requestFrom(0x68, 14, true);
@@ -50,15 +53,13 @@ void setup() {
   accZ = Acc_rawZ / 16384.0;
 
   temp = (temp_raw / 340.0) + 36.53;
-
-  Data_to_Sheets(No_of_Parameters, accX, accY, accZ, temp); /*1. This function accepts multiple float parameter, here No_of_Parameters decides how many parameters you want to send to Google Sheets; 2. The values sent should be in order as per the column in Google Sheets*/
+  bateryRead = analogRead(analogPin);
+  Data_to_Sheets(No_of_Parameters, accX, accY, accZ, temp, bateryRead); /*1. This function accepts multiple float parameter, here No_of_Parameters decides how many parameters you want to send to Google Sheets; 2. The values sent should be in order as per the column in Google Sheets*/
 
   Serial.println();
-  //delay(30000);
+  //delay(3000);
   ESP.deepSleep(60e6);
 }
 
 void loop() {
-
-
 }

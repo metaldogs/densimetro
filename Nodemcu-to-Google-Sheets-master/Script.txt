@@ -19,19 +19,23 @@ function doGet(e) {
       Logger.log(param + ':' + e.parameter[param]);
       switch (param) {
         case 'X': //Parameter 1, It has to be updated in Column in Sheets in the code, orderwise
-          rowData[2] = value; //Value in column A
+          rowData[2] = Number(value); //Value in column A
           result = 'Written on column A';
           break;
         case 'Y': //Parameter 2, It has to be updated in Column in Sheets in the code, orderwise
-          rowData[3] = value; //Value in column B
+          rowData[3] = Number(value); //Value in column B
           result += ' Written on column B';
           break;
         case 'Z': //Parameter 3, It has to be updated in Column in Sheets in the code, orderwise
-          rowData[4] = value; //Value in column C
+          rowData[4] = Number(value); //Value in column C
           result += ' Written on column C';
           break;
         case 'T': //Parameter 4, It has to be updated in Column in Sheets in the code, orderwise
-          rowData[5] = value; //Value in column C
+          rowData[5] = Number(value); //Value in column C
+          result += ' Written on column D';
+          break;
+        case 'B': //Parameter 4, It has to be updated in Column in Sheets in the code, orderwise
+          rowData[6] = Number(value); //Value in column C
           result += ' Written on column D';
           break;
         default:
